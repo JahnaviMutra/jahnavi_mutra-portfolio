@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutra Jahnavi - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --text-secondary: #6b7280;
+            --card-bg: #f8fafc;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #111827;
+            --text-color: #f9fafb;
+            --text-secondary: #9ca3af;
+            --card-bg: #1f2937;
+            --border-color: #374151;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.3);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-color);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Desktop Navigation */
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-color);
+            transition: 0.3s;
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 80px;
+            right: -100%;
+            width: 300px;
+            height: calc(100vh - 80px);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-left: 1px solid var(--border-color);
+            transition: right 0.3s ease;
+            z-index: 999;
+            padding: 2rem 0;
+            display: none;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu li {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-menu a {
+            display: block;
+            padding: 1.5rem 2rem;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: var(--primary-color);
+            color: white;
+            padding-left: 2.5rem;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 998;
+            display: none;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .subsection-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 3rem 0 1.5rem 0;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .simple-skills-list {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .simple-cert-list {
+            list-style: none;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .simple-cert-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+        }
+
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Home Section */
+        .home-section {
+            text-align: center;
+            padding: 6rem 2rem;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .name-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+
+        .role-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .vertical-line {
+            width: 3px;
+            height: 60px;
+            background: var(--primary-color);
+        }
+
+        .role-text {
+            color: var(--text-secondary);
+        }
+
+        .dynamic-role {
+            color: var(--primary-color);
+            font-weight: bold;
+            min-width: 120px;
+            text-align: left;
+        }
+
+        /* Social Links in Home */
+        .home-social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .home-social-links .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .home-social-links .social-link:hover {
+            transform: scale(1.1);
+        }
+
+        .download-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* About Section */
+        .about-section {
+            background: var(--card-bg);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+        .about-text {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Qualification Table */
+        .qualification-container {
+            margin-top: 2rem;
+        }
+
+        .qualification-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .qualification-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-top: 1rem;
+        }
+
+        .qualification-table th,
+        .qualification-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .qualification-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .qualification-table tr:hover {
+            background: var(--border-color);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-name {
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-name {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .demo-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .demo-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--card-bg);
+            text-align: center;
+        }
+
+        .contact-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-info-vertical {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .contact-item-vertical {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .contact-item-vertical:last-child {
+            border-bottom: none;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: scale(1.1);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: block;
+            }
+
+            .menu-overlay {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+
+            .home-section {
+                padding: 4rem 1rem;
+            }
+
+            .profile-photo {
+                width: 150px;
+                height: 150px;
+                font-size: 2rem;
+            }
+
+            .name-title {
+                font-size: 2rem;
+            }
+
+            .role-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .vertical-line {
+                width: 60px;
+                height: 3px;
+            }
+
+            .home-social-links {
+                flex-direction: row;
+                gap: 1rem;
+            }
+
+            .home-social-links .social-link {
+                width: 45px;
+                height: 45px;
+            }
+
+            .qualification-container {
+                overflow-x: auto;
+            }
+
+            .qualification-table {
+                min-width: 600px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .social-links {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Mutra Jahnavi</div>
+        
+        <!-- Desktop Navigation -->
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        
+        <div class="nav-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span id="theme-icon">🌙</span>
+            </button>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="nav-menu" id="nav-menu">
+            <ul>
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li><a href="#about" onclick="closeMenu()">About</a></li>
+                <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+                <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
+                <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+            </ul>
+        </div>
+        <!-- Menu Overlay -->
+        <div class="menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section class="home-section" id="home">
+            <div class="profile-photo"><img src="mypic.jpg" alt="mypic"></div>
+            <h1 class="name-title">Mutra Jahnavi</h1>
+            <div class="role-container">
+                <div class="vertical-line"></div>
+                <div class="role-text">
+                    I'm a <span class="dynamic-role" id="dynamic-role">Passionate Developer</span>
+                </div>
+            </div>
+            <div class="home-social-links">
+                <a href="https://github.com/JahnaviMutra" class="social-link" title="GitHub" onclick="showExternalAlert()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/jahnavi-mutra-a48009254/" class="social-link" title="LinkedIn" onclick="showExternalAlert()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="ebayjahnaviresume.pdf" download="Jahnavi-Resume.pdf" class="download-btn">Download Resume</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section about-section" id="about">
+            <h2 class="section-title">About Me</h2>
+            <p class="about-text">
+                I am a passionate and dedicated professional with continuous learning. I strive to create innovative solutions that make a 
+                meaningful impact. I'm always eager to take on new challenges and collaborate on exciting projects that push the 
+                boundaries of what's possible.
+            </p>
+
+            <h3 class="subsection-title"><div class="qualification-icon">🎓</div>Qualifications</h3>
+            <div class="qualification-container">
+                <table class="qualification-table">
+                    <thead>
+                        <tr>
+                            <th>Education</th>
+                            <th>Institute</th>
+                            <th>Score</th>
+                            <th>Academic Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>B.Tech Computer Science & Engineering</td>
+                            <td>MITS Deemed to be University</td>
+                            <td>9.36 CGPA</td>
+                            <td>2022-2026</td>
+                        </tr>
+                        <tr>
+                            <td>Intermediate (12th)</td>
+                            <td>Sri KrishnaReddy Siddartha Junior College</td>
+                            <td>92.6%</td>
+                            <td>2020-2022</td>
+                        </tr>
+                        <tr>
+                            <td>SSC (10th)</td>
+                            <td>Sai Vidyanikethan High School</td>
+                            <td>98%</td>
+                            <td>2020</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">Technical Skills</h3>
+            <div class="simple-skills-list">
+                Python, HTML, CSS, MySQL, Java(Basics), JavaScript, AWS-EC2, Git
+            </div>
+
+            <h3 class="subsection-title">Certifications</h3>
+            <ul class="simple-cert-list">
+                <li>• AWS Cloud Essentials</li>
+                <li>• Python Programming Certification</li>
+            </ul>
+        </section>
+
+         <!-- Skills Section -->
+        <section class="section" id="skills">
+            <h2 class="section-title">Skills</h2>
+            <p class="about-text" style="margin-bottom: 3rem;">
+                I possess a diverse skill set that combines technical expertise with strong interpersonal abilities, 
+                enabling me to excel in both individual and collaborative environments.
+            </p>
+            
+            <div>
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--text-color);">Technical Skills</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-icon">🐍</div>
+                        <div class="skill-name">Python</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🎨</div>
+                        <div class="skill-name">HTML/CSS</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🗄️</div>
+                        <div class="skill-name">MySQL</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">☕</div>
+                        <div class="skill-name">Java(Basics)</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">☁️</div>
+                        <div class="skill-name">AWS-EC2</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🔧</div>
+                        <div class="skill-name">Git</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--text-color);">Interpersonal Skills</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-icon">👥</div>
+                        <div class="skill-name">Team Leadership</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">💬</div>
+                        <div class="skill-name">Communication</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">⏰</div>
+                        <div class="skill-name">Time Management</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon">🧩</div>
+                        <div class="skill-name">Problem Solving</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section" id="projects">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-name">AI Tools</div>
+                    <a href="https://jahnaviaitools.netlify.app/" class="demo-link" onclick="showExternalAlert()">
+                        🔗 View Demo
+                    </a>
+                    <p>AI Tools Website – A responsive and user-friendly website that provides multiple AI-powered tools like text generation, summarization, image editing, and code assistance, built with clean design and smooth functionality.</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-name">Task Manager</div>
+                    <a href="https://jahnavitaskmanager.netlify.app/" class="demo-link" onclick="showExternalAlert()">
+                        🔗 View Demo
+                    </a>
+                    <p>A collaborative task management application with real-time updates, built using HTML, CSS and Javascript. Includes edit and delete features and progress tracking.</p>
+                </div>
+            </div>
+        </section>
+
+       
+
+        <!-- Contact Section -->
+        <section class="section contact-section" id="contact">
+            <h2 class="section-title">Contact Me</h2>
+            <p class="contact-subtitle">
+                Have a question, opportunity or just want to contact? I am always open to discuss.
+            </p>
+            <div class="contact-info-vertical">
+                <div class="contact-item-vertical">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <strong>Phone:</strong> +91 7981170560
+                    </div>
+                </div>
+                <div class="contact-item-vertical">
+                    <div class="contact-icon">✉️</div>
+                    <div>
+                        <strong>Email:</strong> jahnavimutra@gmail.com
+                    </div>
+                </div>
+                <div class="contact-item-vertical">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <strong>Location:</strong> Andhra Pradesh, India
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <h3 class="footer-title">Connect with me</h3>
+        <div class="social-links">
+            <a href="https://github.com/JahnaviMutra" class="social-link" title="GitHub" onclick="showExternalAlert()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/jahnavi-mutra-a48009254/" class="social-link" title="LinkedIn" onclick="showExternalAlert()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+        </div>
+        <p class="copyright">2025 Mutra Jahnavi. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Theme Toggle Functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+            }
+        }
+
+        // Menu Toggle Functionality
+        function toggleMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            const menuOverlay = document.getElementById('menu-overlay');
+            
+            navMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            const menuOverlay = document.getElementById('menu-overlay');
+            
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        }
+
+        // External Link Alert
+        function showExternalAlert() {
+            setTimeout(() => {
+                alert("Don't forget to come back to Jahnavi's Portfolio! 😊");
+            }, 100);
+        }
+
+
+        // Dynamic Role Animation
+        const roles = ['Student', 'Problem Solver', 'Creative Thinker', 'Cloud Enthusiast'];
+        let currentRoleIndex = 0;
+        
+        function animateRole() {
+            const roleElement = document.getElementById('dynamic-role');
+            roleElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentRoleIndex = (currentRoleIndex + 1) % roles.length;
+                roleElement.textContent = roles[currentRoleIndex];
+                roleElement.style.opacity = '1';
+            }, 300);
+        }
+
+        // Start role animation
+        setInterval(animateRole, 3000);
+
+        // Smooth scrolling for navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle navigation clicks
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        });
+
+        // Prevent default behavior for external links and show alert
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle external links with alerts
+            const externalLinks = document.querySelectorAll('a[href^="http"]');
+            externalLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Only show alert for GitHub, LinkedIn, and project demos
+                    const href = this.getAttribute('href');
+                    if (href.includes('github.com') || 
+                        href.includes('linkedin.com') || 
+                        href.includes('netlify.app')) {
+                        e.preventDefault();
+                        showExternalAlert();
+                        // After alert, open the link
+                        setTimeout(() => {
+                            window.open(href, '_blank');
+                        }, 500);
+                    }
+                });
+            });
+
+            // Handle download button
+            const downloadBtn = document.querySelector('a[download]');
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function() {
+                    showDownloadAlert();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
